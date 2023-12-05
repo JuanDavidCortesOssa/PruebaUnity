@@ -4,14 +4,16 @@ using UnityEngine;
 
 public static class DataManager
 {
-    public static Data StoredData { get; private set; }
-    private static string currentUser;
+    public static Data StoredData { get; private set; } = new Data();
+    private static SerializableData _serializableData = new SerializableData();
+    private static string _currentUser;
 
     private const string PlayerPrefsDataKey = "PlayersData";
 
-    public static void SaveData()
+    private static void SaveData()
     {
-        var json = JsonUtility.ToJson(StoredData);
+        _serializableData = DataConverter.ToSerializableData(StoredData);
+        var json = JsonUtility.ToJson(_serializableData);
         PlayerPrefs.SetString(PlayerPrefsDataKey, json);
         PlayerPrefs.Save();
         Debug.Log(json);
@@ -19,25 +21,34 @@ public static class DataManager
 
     public static void LoadData()
     {
+        if (!PlayerPrefs.HasKey(PlayerPrefsDataKey)) return;
+
         var json = PlayerPrefs.GetString(PlayerPrefsDataKey);
-        StoredData = JsonUtility.FromJson<Data>(json);
+        _serializableData = JsonUtility.FromJson<SerializableData>(json);
+        StoredData = DataConverter.ToData(_serializableData);
         Debug.Log(json);
+    }
+
+    public static void SelectCurrentPlayer(string userName)
+    {
+        _currentUser = userName;
     }
 
     public static void AddNewPlayer(string userName, string password)
     {
-        StoredData ??= new Data();
-
-        currentUser = userName;
+        SelectCurrentPlayer(userName);
         var playerData = new PlayerData
         {
             password = password
         };
-        StoredData.PlayersData.Add(currentUser, playerData);
+        StoredData.PlayersData.Add(_currentUser, playerData);
+
+        SaveData();
     }
 
     public static void UpdatePlayerData(PlayerData.InGameData inGameData)
     {
-        StoredData.PlayersData[currentUser].inGameData = inGameData;
+        StoredData.PlayersData[_currentUser].inGameData = inGameData;
+        SaveData();
     }
 }
