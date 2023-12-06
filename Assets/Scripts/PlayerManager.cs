@@ -94,7 +94,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     [ContextMenu("SavePlayerData")]
-    private void SavePlayerData()
+    public void SavePlayerData()
     {
         var position = transform.position;
         var gameData = new PlayerData.InGameData

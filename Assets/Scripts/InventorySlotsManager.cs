@@ -20,28 +20,15 @@ public class InventorySlotsManager : MonoBehaviour
 
     public Transform GetObjectSlotByType(ObjectType objectType)
     {
-        // for (int i = emptyObjectSlots.Count - 1; i >= 0; i--)
-        // {
-        //     if (emptyObjectSlots[i].objectType == objectType)
-        //     {
-        //         var transform = emptyObjectSlots[0].transform;
-        //         emptyObjectSlots.RemoveAt(0);
-        //     }
-        //
-        //     var transform = emptyObjectSlots[0].transform;
-        //     emptyObjectSlots.RemoveAt(0);
-        //
-        //     return transform;
-        // }
-
         for (var i = 0; i < emptyObjectSlots.Count; i++)
         {
-            if (emptyObjectSlots[i].objectType == objectType) continue;
+            if (emptyObjectSlots[i].objectType == objectType)
+            {
+                var transform = emptyObjectSlots[i].transform;
+                emptyObjectSlots.RemoveAt(i);
 
-            var transform = emptyObjectSlots[i].transform;
-            emptyObjectSlots.RemoveAt(i);
-
-            return transform;
+                return transform;
+            }
         }
 
         return null;
