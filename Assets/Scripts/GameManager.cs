@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InventorySlotsManager inventorySlotsManager;
 
     [SerializeField] private GameObject draggableObjectGo;
-    [SerializeField] private ObjectsStockSo objectsStockSo;
+    [SerializeField] private ItemsStockSO objectsStockSo;
 
     private PlayerData.InGameData storedData = new PlayerData.InGameData();
 
