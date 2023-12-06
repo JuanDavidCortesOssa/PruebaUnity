@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public abstract class InventoryObject : MonoBehaviour, IInteractable
+public class InventoryObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private int objectId;
 
@@ -17,12 +18,12 @@ public abstract class InventoryObject : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        PickUpObject();
+        PickUp();
     }
-    
-    private void PickUpObject()
+
+    private void PickUp()
     {
-        //Add to player inventory
+        ObjectCollectionChannel.OnObjectCollected(objectId);
         gameObject.SetActive(false);
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Hud hud;
+    [SerializeField] private PlayerManager playerManager;
 
     private void Start()
     {
@@ -14,11 +15,20 @@ public class GameManager : MonoBehaviour
 
     private void InitializeScene()
     {
-        InitializePlayerName();
+        InitializeHud();
+        InitializePlayerData();
     }
 
-    private void InitializePlayerName()
+    private void InitializeHud()
     {
         hud.SetUserText(DataManager.CurrentUser);
+    }
+
+    private void InitializePlayerData()
+    {
+        var storedData = DataManager.GetCurrentPlayerData();
+        playerManager.playerInventory.inventoryIds = storedData.inventory;
+        playerManager.playerInventory.selectedObjectIds = storedData.objects;
+        playerManager.UpdatePlayerPosition(storedData.position);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Login : MonoBehaviour
@@ -24,6 +25,7 @@ public class Login : MonoBehaviour
 
     private void LogUser()
     {
+        var continueScene = false;
         var userName = userField.text;
         var password = passwordField.text;
 
@@ -33,6 +35,7 @@ public class Login : MonoBehaviour
             {
                 DataManager.SelectCurrentPlayer(userName);
                 Debug.Log("Bienvenido " + userName);
+                continueScene = true;
             }
             else
             {
@@ -42,6 +45,17 @@ public class Login : MonoBehaviour
         else
         {
             DataManager.AddNewPlayer(userName, password);
+            continueScene = true;
         }
+
+        if (continueScene)
+        {
+            LoadGameScene();
+        }
+    }
+
+    private void LoadGameScene()
+    {
+        SceneManager.LoadScene("Main");
     }
 }

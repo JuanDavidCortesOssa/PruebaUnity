@@ -51,4 +51,9 @@ public static class DataManager
         StoredData.PlayersData[CurrentUser].inGameData = inGameData;
         SaveData();
     }
+
+    public static PlayerData.InGameData GetCurrentPlayerData()
+    {
+        return StoredData.PlayersData[CurrentUser].inGameData;
+    }
 }

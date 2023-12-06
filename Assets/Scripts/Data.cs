@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Data
 {
@@ -25,7 +26,7 @@ public class PlayerData
     [Serializable]
     public class InGameData
     {
-        public List<Vector2> positions = new List<Vector2>();
+        public Vector2 position = new Vector2();
         public List<int> inventory = new List<int>();
         public List<int> objects = new List<int>();
     }
