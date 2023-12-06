@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         InitializeHud();
         InitializePlayerData();
         InitializeCollectableObjects();
+        InitializeDraggableObjects();
     }
 
     private void InitializeHud()
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void InstantiateDraggableObject(InventoryObjectData objectData, Transform parentTransform)
     {
-        GameObject instance = Instantiate(draggableObjectGo);
+        GameObject instance = Instantiate(draggableObjectGo, parentTransform);
         DraggableObject draggableObject = instance.GetComponent<DraggableObject>();
 
         draggableObject.Setup(objectData, parentTransform);
