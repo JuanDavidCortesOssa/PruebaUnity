@@ -8,14 +8,6 @@ public class CollectableObject : MonoBehaviour, IInteractable
 {
     public int objectId;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag.Equals("Player"))
-        {
-            Interact();
-        }
-    }
-
     public void Interact()
     {
         PickUp();

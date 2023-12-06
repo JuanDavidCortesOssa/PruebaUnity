@@ -7,7 +7,17 @@ public class PlayerManager : MonoBehaviour
 {
     public PlayerInventory playerInventory = new PlayerInventory();
 
-    #region AddObjectsToInventory
+    #region PlayerInteractions
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.gameObject.CompareTag("Interactable")) return;
+        other.gameObject.GetComponent<IInteractable>().Interact();
+    }
+
+    #endregion
+
+    #region AddListeners
 
     private void OnEnable()
     {
