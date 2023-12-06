@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class InventoryObject : MonoBehaviour, IInteractable
+public class CollectableObject : MonoBehaviour, IInteractable
 {
-    [SerializeField] private int objectId;
+    public int objectId;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
