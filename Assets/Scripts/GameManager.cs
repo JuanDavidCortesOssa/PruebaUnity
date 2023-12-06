@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Hud hud;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private List<CollectableObject> collectableObjects;
+    [SerializeField] private InventorySlotsManager inventorySlotsManager;
+
+    [SerializeField] private GameObject draggableObjectGo;
+    [SerializeField] private ObjectsStockSo objectsStockSo;
 
     private PlayerData.InGameData storedData = new PlayerData.InGameData();
 
@@ -50,4 +54,58 @@ public class GameManager : MonoBehaviour
             collectableObjects.Where(t => t.objectId == objectId).ToList().ForEach(t => t.gameObject.SetActive(false));
         }
     }
+
+    private void InitializeDraggableObjects()
+    {
+        foreach (var itemId in storedData.inventory)
+        {
+            InstantiateDraggableObjectOnInventory(itemId);
+        }
+
+        foreach (var itemId in storedData.objects)
+        {
+            var objectData = objectsStockSo.inventoryObjects[itemId];
+            var parentTransform = inventorySlotsManager.GetObjectSlotByType(objectData.objectType);
+            InstantiateDraggableObject(objectData, parentTransform);
+        }
+    }
+
+    private void InstantiateDraggableObjectOnInventory(int itemId)
+    {
+        var objectData = objectsStockSo.inventoryObjects[itemId];
+        var parentTransform = inventorySlotsManager.GetEmptySlotTransform();
+        InstantiateDraggableObject(objectData, parentTransform);
+    }
+
+    private void InstantiateDraggableObject(InventoryObjectData objectData, Transform parentTransform)
+    {
+        GameObject instance = Instantiate(draggableObjectGo);
+        DraggableObject draggableObject = instance.GetComponent<DraggableObject>();
+
+        draggableObject.Setup(objectData, parentTransform);
+    }
+
+    #region AddListeners
+
+    private void OnEnable()
+    {
+        AddListeners();
+    }
+
+    private void OnDisable()
+    {
+        RemoveListeners();
+    }
+
+    private void AddListeners()
+    {
+        ObjectCollectionChannel.ObjectCollected += InstantiateDraggableObjectOnInventory;
+    }
+
+    private void RemoveListeners()
+    {
+        ObjectCollectionChannel.ObjectCollected -= InstantiateDraggableObjectOnInventory;
+    }
+
+    #endregion
 }

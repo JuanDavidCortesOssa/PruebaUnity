@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class ObjectSlot : InventorySlot
 {
-    [SerializeField] private ObjectType objectType;
+    public ObjectType objectType;
 
     public override void OnDrop(PointerEventData eventData)
     {
