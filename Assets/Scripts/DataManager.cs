@@ -6,7 +6,7 @@ public static class DataManager
 {
     public static Data StoredData { get; private set; } = new Data();
     private static SerializableData _serializableData = new SerializableData();
-    private static string _currentUser;
+    public static string CurrentUser = "";
 
     private const string PlayerPrefsDataKey = "PlayersData";
 
@@ -31,7 +31,7 @@ public static class DataManager
 
     public static void SelectCurrentPlayer(string userName)
     {
-        _currentUser = userName;
+        CurrentUser = userName;
     }
 
     public static void AddNewPlayer(string userName, string password)
@@ -41,14 +41,14 @@ public static class DataManager
         {
             password = password
         };
-        StoredData.PlayersData.Add(_currentUser, playerData);
+        StoredData.PlayersData.Add(CurrentUser, playerData);
 
         SaveData();
     }
 
     public static void UpdatePlayerData(PlayerData.InGameData inGameData)
     {
-        StoredData.PlayersData[_currentUser].inGameData = inGameData;
+        StoredData.PlayersData[CurrentUser].inGameData = inGameData;
         SaveData();
     }
 }
