@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -9,12 +10,14 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public Image Image;
     public ObjectType objectType;
     [HideInInspector] public Transform parentAfterDrag;
+    public int objectId;
 
-    public void Setup(InventoryObjectData objectData, Transform parentTransform)
+    public void Setup(InventoryObjectData objectData, Transform parentTransform, int objId)
     {
         Image.sprite = objectData.sprite;
         objectType = objectData.objectType;
         parentAfterDrag = parentTransform;
+        objectId = objId;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

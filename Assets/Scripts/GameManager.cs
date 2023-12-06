@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         {
             var objectData = itemsStockSo.inventoryObjects[itemId];
             var parentTransform = inventorySlotsManager.GetObjectSlotByType(objectData.objectType);
-            InstantiateDraggableObject(objectData, parentTransform);
+            InstantiateDraggableObject(objectData, parentTransform, itemId);
         }
     }
 
@@ -91,15 +91,15 @@ public class GameManager : MonoBehaviour
     {
         var objectData = itemsStockSo.inventoryObjects[itemId];
         var parentTransform = inventorySlotsManager.GetEmptySlotTransform();
-        InstantiateDraggableObject(objectData, parentTransform);
+        InstantiateDraggableObject(objectData, parentTransform, itemId);
     }
 
-    private void InstantiateDraggableObject(InventoryObjectData objectData, Transform parentTransform)
+    private void InstantiateDraggableObject(InventoryObjectData objectData, Transform parentTransform, int objectId)
     {
         GameObject instance = Instantiate(draggableObjectGo, parentTransform);
         DraggableObject draggableObject = instance.GetComponent<DraggableObject>();
 
-        draggableObject.Setup(objectData, parentTransform);
+        draggableObject.Setup(objectData, parentTransform, objectId);
     }
 
     #region AddListeners

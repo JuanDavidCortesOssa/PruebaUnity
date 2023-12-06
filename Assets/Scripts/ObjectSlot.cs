@@ -17,6 +17,7 @@ public class ObjectSlot : InventorySlot
         if (draggableObject.objectType != objectType) return;
 
         draggableObject.parentAfterDrag = transform;
-        InventoryChannel.OnObjectSlotFilled(draggableObject.objectType, draggableObject.Image.sprite);
+        InventoryChannel.OnObjectSlotFilled(draggableObject.objectType, draggableObject.Image.sprite,
+            draggableObject.objectId);
     }
 }

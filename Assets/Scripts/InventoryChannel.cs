@@ -6,10 +6,10 @@ using UnityEngine;
 
 public static class InventoryChannel
 {
-    public static event Action<ObjectType, Sprite> ObjectSlotFilled;
+    public static event Action<ObjectType, Sprite, int> ObjectSlotFilled;
 
-    public static void OnObjectSlotFilled(ObjectType objectType, Sprite sprite)
+    public static void OnObjectSlotFilled(ObjectType objectType, Sprite sprite, int objectId)
     {
-        ObjectSlotFilled?.Invoke(objectType, sprite);
+        ObjectSlotFilled?.Invoke(objectType, sprite, objectId);
     }
 }

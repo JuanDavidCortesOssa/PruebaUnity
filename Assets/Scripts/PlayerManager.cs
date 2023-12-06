@@ -52,6 +52,12 @@ public class PlayerManager : MonoBehaviour
         playerInventory.AddObjectToInventory(objectId);
     }
 
+    private void AddToPlayerSlot(ObjectType objectType, Sprite sprite, int objectId)
+    {
+        AddToPlayerSlot(objectType, sprite);
+        playerInventory.SelectObject(objectId);
+    }
+
     public void AddToPlayerSlot(ObjectType objectType, Sprite sprite)
     {
         switch (objectType)
