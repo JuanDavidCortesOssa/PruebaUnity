@@ -2069,7 +2069,7 @@ MonoBehaviour:
   - {fileID: 45996050}
   inventorySlotsManager: {fileID: 657658884}
   draggableObjectGo: {fileID: 6114459194751040787, guid: bff9593c04d9a8e4a99d3dc457b2415d, type: 3}
-  objectsStockSo: {fileID: 11400000, guid: 4789111f8f5b9c84fab60aca2b17a8b0, type: 2}
+  itemsStockSo: {fileID: 11400000, guid: 4789111f8f5b9c84fab60aca2b17a8b0, type: 2}
 --- !u!4 &1557533701
 Transform:
   m_ObjectHideFlags: 0

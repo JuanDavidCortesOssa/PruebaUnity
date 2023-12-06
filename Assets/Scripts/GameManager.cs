@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InventorySlotsManager inventorySlotsManager;
 
     [SerializeField] private GameObject draggableObjectGo;
-    [SerializeField] private ItemsStockSO objectsStockSo;
+    [SerializeField] private ItemsStockSO itemsStockSo;
 
     private PlayerData.InGameData storedData = new PlayerData.InGameData();
 
@@ -41,6 +41,22 @@ public class GameManager : MonoBehaviour
         playerManager.playerInventory.inventoryIds = storedData.inventory;
         playerManager.playerInventory.selectedObjectIds = storedData.objects;
         playerManager.UpdatePlayerPosition(storedData.position);
+        InitializePlayerObjects();
+    }
+
+    private void InitializePlayerObjects()
+    {
+        foreach (var dataId in storedData.objects)
+        {
+            for (var i = 0; i < itemsStockSo.inventoryObjects.Count; i++)
+            {
+                if (dataId == i)
+                {
+                    playerManager.AddToPlayerSlot(itemsStockSo.inventoryObjects[i].objectType,
+                        itemsStockSo.inventoryObjects[i].sprite);
+                }
+            }
+        }
     }
 
     private void InitializeCollectableObjects()
@@ -65,7 +81,7 @@ public class GameManager : MonoBehaviour
 
         foreach (var itemId in storedData.objects)
         {
-            var objectData = objectsStockSo.inventoryObjects[itemId];
+            var objectData = itemsStockSo.inventoryObjects[itemId];
             var parentTransform = inventorySlotsManager.GetObjectSlotByType(objectData.objectType);
             InstantiateDraggableObject(objectData, parentTransform);
         }
@@ -73,7 +89,7 @@ public class GameManager : MonoBehaviour
 
     private void InstantiateDraggableObjectOnInventory(int itemId)
     {
-        var objectData = objectsStockSo.inventoryObjects[itemId];
+        var objectData = itemsStockSo.inventoryObjects[itemId];
         var parentTransform = inventorySlotsManager.GetEmptySlotTransform();
         InstantiateDraggableObject(objectData, parentTransform);
     }

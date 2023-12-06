@@ -7,6 +7,10 @@ public class PlayerManager : MonoBehaviour
 {
     public PlayerInventory playerInventory = new PlayerInventory();
 
+    [SerializeField] private SpriteRenderer headSpriteRenderer;
+    [SerializeField] private SpriteRenderer handsSpriteRenderer;
+    [SerializeField] private SpriteRenderer footsSpriteRenderer;
+
     #region PlayerInteractions
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -32,19 +36,56 @@ public class PlayerManager : MonoBehaviour
     private void AddListeners()
     {
         ObjectCollectionChannel.ObjectCollected += AddObject;
+        InventoryChannel.ObjectSlotFilled += AddToPlayerSlot;
     }
 
     private void RemoveListeners()
     {
         ObjectCollectionChannel.ObjectCollected -= AddObject;
+        InventoryChannel.ObjectSlotFilled -= AddToPlayerSlot;
     }
+
+    #endregion
 
     private void AddObject(int objectId)
     {
         playerInventory.AddObjectToInventory(objectId);
     }
 
-    #endregion
+    public void AddToPlayerSlot(ObjectType objectType, Sprite sprite)
+    {
+        switch (objectType)
+        {
+            case ObjectType.Head:
+                PrepareRenderer(headSpriteRenderer, sprite);
+                break;
+            case ObjectType.Hands:
+                PrepareRenderer(handsSpriteRenderer, sprite);
+                break;
+            case ObjectType.Foots:
+                PrepareRenderer(footsSpriteRenderer, sprite);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(objectType), objectType, null);
+        }
+    }
+
+    private void PrepareRenderer(SpriteRenderer spriteRenderer, Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+        spriteRenderer.enabled = true;
+    }
+
+    public void RemoveFromPlayerSlot(ObjectType objectType)
+    {
+        headSpriteRenderer.enabled = objectType switch
+        {
+            ObjectType.Head => false,
+            ObjectType.Hands => false,
+            ObjectType.Foots => false,
+            _ => throw new ArgumentOutOfRangeException(nameof(objectType), objectType, null)
+        };
+    }
 
     [ContextMenu("SavePlayerData")]
     private void SavePlayerData()
